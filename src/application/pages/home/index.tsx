@@ -1,9 +1,10 @@
-import { Footer, Header, Input, Spinner } from '@/application/components'
+import { Input, Spinner } from '@/application/components'
 import { transport } from '@/application/assets'
 import { ListOrderByTrackingCode } from '@/domain/use-cases'
 import { useOrder } from '@/application/hooks'
+import { Layout } from '@/application/layouts'
 
-import { Container, Content } from './styles'
+import { Content } from './styles'
 
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -34,8 +35,7 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
   }
 
   return (
-    <Container>
-      <Header />
+    <Layout>
       <Content>
         <aside>
           <img src={transport} alt="Transport" />
@@ -51,7 +51,6 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
           <button type="submit" data-testid="submit-button" disabled={!trackingCode}>{ loading ? <Spinner /> : 'Rastrear' }</button>
         </form>
       </Content>
-      <Footer />
-    </Container>
+    </Layout>
   )
 }
