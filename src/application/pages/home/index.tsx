@@ -6,8 +6,13 @@ import { Container, Content } from './styles'
 import React, { useState } from 'react'
 
 export const Home: React.FC = () => {
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [trackingCode, setTrackingCode] = useState('')
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+    setLoading(true)
+  }
 
   return (
     <Container>
@@ -16,7 +21,7 @@ export const Home: React.FC = () => {
         <aside>
           <img src={transport} alt="Transport" />
         </aside>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             name="trackingCode"
             data-testid="trackingCode"
