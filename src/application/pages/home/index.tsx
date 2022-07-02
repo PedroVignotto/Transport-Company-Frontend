@@ -4,12 +4,15 @@ import { ListOrderByTrackingCode } from '@/domain/use-cases'
 
 import { Container, Content } from './styles'
 
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 type Props = { listOrderByTrackingCode: ListOrderByTrackingCode }
 
 export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
+  const navigate = useNavigate()
+
   const [loading, setLoading] = useState(false)
   const [trackingCode, setTrackingCode] = useState('')
 
@@ -19,9 +22,11 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
       if (loading || !trackingCode) return
       setLoading(true)
       await listOrderByTrackingCode({ trackingCode })
+      navigate('/tracking')
     } catch (error: any) {
-      setLoading(false)
       toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
