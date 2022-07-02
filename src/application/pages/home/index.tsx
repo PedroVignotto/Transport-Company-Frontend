@@ -3,10 +3,10 @@ import { transport } from '@/application/assets'
 
 import { Container, Content } from './styles'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 export const Home: React.FC = () => {
-  const loading = false
+  const [loading] = useState(false)
 
   return (
     <Container>
@@ -16,8 +16,8 @@ export const Home: React.FC = () => {
           <img src={transport} alt="Transport" />
         </aside>
         <form>
-          <Input type="text" name="trackingCode" placeholder="Insira o código de rastreio" />
-          <button type="submit">{ loading ? <Spinner /> : 'Rastrear' }</button>
+          <Input name="trackingCode" placeholder="Insira o código de rastreio" data-testid="trackingCode" />
+          <button type="submit" data-testid="submit-button" disabled>{ loading ? <Spinner /> : 'Rastrear' }</button>
         </form>
       </Content>
       <Footer />
