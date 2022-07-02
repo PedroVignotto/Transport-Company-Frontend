@@ -1,17 +1,21 @@
 import { Footer, Header, Input, Spinner } from '@/application/components'
 import { transport } from '@/application/assets'
+import { ListOrderByTrackingCode } from '@/domain/use-cases'
 
 import { Container, Content } from './styles'
 
 import React, { useState } from 'react'
 
-export const Home: React.FC = () => {
+type Props = { listOrderByTrackingCode: ListOrderByTrackingCode }
+
+export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
   const [loading, setLoading] = useState(false)
   const [trackingCode, setTrackingCode] = useState('')
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     setLoading(true)
+    await listOrderByTrackingCode({ trackingCode })
   }
 
   return (
