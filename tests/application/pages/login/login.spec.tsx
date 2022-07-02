@@ -55,4 +55,13 @@ describe('Home', () => {
 
     expect(listOrderByTrackingCode).toHaveBeenCalledWith({ trackingCode })
   })
+
+  it('Should call listOrderByTrackingCode only once', async () => {
+    makeSut()
+
+    simulateSubmit()
+    fireEvent.click(screen.getByTestId('submit-button'))
+
+    expect(listOrderByTrackingCode).toHaveBeenCalledTimes(1)
+  })
 })
