@@ -9,7 +9,6 @@ export type ListOrderByTrackingCode = (input: Input) => Promise<Output>
 
 export const listOrderByTrackingCodeUseCase: Setup = (url, httpClient) => async ({ trackingCode }) => {
   const { statusCode, data } = await httpClient.request({ url: `${url}/${trackingCode}`, method: 'get' })
-
   switch (statusCode) {
     case 200: return data!
     case 400: throw new FieldNotFoundError('Código de rastreio')
