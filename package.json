@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test:unit": "npm t -- --watch",
+    "test:staged": "npm t -- --findRelatedTests",
+    "test:coverage": "npm t -- --coverage"
+  },
   "devDependencies": {
+    "@types/jest": "^28.1.4",
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "eslint": "^7.12.1",
@@ -12,6 +19,9 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.0.0",
     "git-commit-msg-linter": "^4.1.3",
+    "jest": "^28.1.2",
+    "jest-mock-extended": "^2.0.6",
+    "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
   }
 }
