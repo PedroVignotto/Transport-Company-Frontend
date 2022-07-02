@@ -26,4 +26,13 @@ describe('Home', () => {
 
     expect(screen.getByTestId('submit-button')).toBeEnabled()
   })
+
+  it('Should show spinner on submit', async () => {
+    render(<Home />)
+
+    fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
+    fireEvent.click(screen.getByTestId('submit-button'))
+
+    expect(screen.getByTestId('submit-button')).not.toHaveTextContent('Rastrear')
+  })
 })
