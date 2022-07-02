@@ -1,4 +1,7 @@
+import { colors } from './colors'
+
 import { createGlobalStyle } from 'styled-components'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -10,6 +13,10 @@ export const GlobalStyle = createGlobalStyle`
 
   *:focus {
     outline: 0;
+  }
+
+  :root {
+    --toastify-color-error: ${colors.red};
   }
 
   html, body, #root {
