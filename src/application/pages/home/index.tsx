@@ -14,6 +14,7 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
+    if (loading) return
     setLoading(true)
     await listOrderByTrackingCode({ trackingCode })
   }
