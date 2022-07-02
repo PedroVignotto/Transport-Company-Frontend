@@ -12,8 +12,8 @@ module.exports = {
     '@/(.+)': '<rootDir>/src/$1',
     '\\.(jpg|jpeg|svg|png|css)$': 'jest-transform-stub'
   },
-  testMatch: ['**/*.spec.ts', '**/*.test.ts'],
   roots: ['<rootDir>/src', '<rootDir>/tests'],
+  setupFilesAfterEnv: ['<rootDir>/src/main/config/jest-setup.ts'],
   transform: { '.+\\.(ts|tsx)$': 'ts-jest' },
   testEnvironment: 'jsdom',
   clearMocks: true
