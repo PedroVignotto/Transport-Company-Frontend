@@ -41,4 +41,12 @@ describe('AxiosAdapter', () => {
     expect(httpResponse.statusCode).toBe(statusCode)
     expect(httpResponse.data).toEqual(data)
   })
+
+  it('Should return correct error', async () => {
+    fakeAxios.request.mockRejectedValueOnce({ response: { status: statusCode, data } })
+
+    const result = await sut.request({ url, method, body })
+
+    expect(result).toEqual({ statusCode, data })
+  })
 })
