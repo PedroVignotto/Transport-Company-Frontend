@@ -4,6 +4,7 @@ import { ListOrderByTrackingCode } from '@/domain/use-cases'
 
 import { Container, Content } from './styles'
 
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 type Props = { listOrderByTrackingCode: ListOrderByTrackingCode }
@@ -14,9 +15,14 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    if (loading || !trackingCode) return
-    setLoading(true)
-    await listOrderByTrackingCode({ trackingCode })
+    try {
+      if (loading || !trackingCode) return
+      setLoading(true)
+      await listOrderByTrackingCode({ trackingCode })
+    } catch (error: any) {
+      setLoading(false)
+      toast.error(error.message)
+    }
   }
 
   return (
