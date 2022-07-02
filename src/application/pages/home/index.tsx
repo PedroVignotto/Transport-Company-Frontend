@@ -1,6 +1,7 @@
 import { Footer, Header, Input, Spinner } from '@/application/components'
 import { transport } from '@/application/assets'
 import { ListOrderByTrackingCode } from '@/domain/use-cases'
+import { useOrder } from '@/application/hooks'
 
 import { Container, Content } from './styles'
 
@@ -12,6 +13,7 @@ type Props = { listOrderByTrackingCode: ListOrderByTrackingCode }
 
 export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
   const navigate = useNavigate()
+  const { setOrder } = useOrder()
 
   const [loading, setLoading] = useState(false)
   const [trackingCode, setTrackingCode] = useState('')
@@ -21,7 +23,8 @@ export const Home: React.FC<Props> = ({ listOrderByTrackingCode }) => {
     try {
       if (loading || !trackingCode) return
       setLoading(true)
-      await listOrderByTrackingCode({ trackingCode })
+      const order = await listOrderByTrackingCode({ trackingCode })
+      setOrder(order)
       navigate('/tracking')
     } catch (error: any) {
       toast.error(error.message)

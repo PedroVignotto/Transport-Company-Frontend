@@ -1,3 +1,4 @@
+import { OrderProvider } from '@/application/contexts'
 import { GlobalStyle } from '@/application/styles'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -10,7 +11,7 @@ type Props = {
 
 export const Router: React.FC<Props> = ({ Home }) => {
   return (
-    <>
+    <OrderProvider>
       <ToastContainer autoClose={3000} theme="colored" />
       <GlobalStyle />
       <BrowserRouter>
@@ -18,6 +19,6 @@ export const Router: React.FC<Props> = ({ Home }) => {
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </OrderProvider>
   )
 }

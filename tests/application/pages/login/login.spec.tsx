@@ -1,4 +1,5 @@
 import { generateRandomOrder } from '@/tests/mocks'
+import { OrderProvider } from '@/application/contexts'
 import { Home } from '@/application/pages'
 import { UnexpectedError } from '@/domain/errors'
 
@@ -18,10 +19,12 @@ describe('Home', () => {
 
   const makeSut = (): void => {
     render(
-      <BrowserRouter>
-        <ToastContainer/>
-        <Home listOrderByTrackingCode={listOrderByTrackingCode} />
-      </BrowserRouter>
+      <OrderProvider>
+        <BrowserRouter>
+          <ToastContainer/>
+          <Home listOrderByTrackingCode={listOrderByTrackingCode} />
+        </BrowserRouter>
+      </OrderProvider>
     )
   }
 
