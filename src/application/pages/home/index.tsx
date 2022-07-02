@@ -1,7 +1,7 @@
-import { Input, Spinner } from '@/application/components'
+import { Header, Input, Spinner } from '@/application/components'
 import { transport } from '@/application/assets'
 
-import { Container, Content, Footer, Header } from './styles'
+import { Container, Content, Footer } from './styles'
 
 import { FiInstagram, FiTwitter, FiYoutube } from 'react-icons/fi'
 import React from 'react'
@@ -11,12 +11,7 @@ export const Home: React.FC = () => {
 
   return (
     <Container>
-      <Header>
-        <h1>Transport-Company</h1>
-        <nav>
-          <a href="#">home</a>
-        </nav>
-      </Header>
+      <Header />
       <Content>
         <aside>
           <img src={transport} alt="Transport" />
