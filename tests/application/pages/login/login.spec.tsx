@@ -7,12 +7,23 @@ import React from 'react'
 describe('Home', () => {
   let trackingCode: string
 
+  const makeSut = (): void => { render(<Home />) }
+
   beforeAll(() => {
     trackingCode = generateRandomOrder().trackingCode
   })
 
+  const populateField = (): void => {
+    fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
+  }
+
+  const simulateSubmit = (): void => {
+    populateField()
+    fireEvent.click(screen.getByTestId('submit-button'))
+  }
+
   it('Should load with correct initial state', () => {
-    render(<Home />)
+    makeSut()
 
     expect(screen.getByTestId('submit-button')).toHaveTextContent('Rastrear')
     expect(screen.getByTestId('submit-button')).toBeDisabled()
@@ -20,18 +31,17 @@ describe('Home', () => {
   })
 
   it('Should enable submit button if form is valid', () => {
-    render(<Home />)
+    makeSut()
 
-    fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
+    populateField()
 
     expect(screen.getByTestId('submit-button')).toBeEnabled()
   })
 
   it('Should show spinner on submit', async () => {
-    render(<Home />)
+    makeSut()
 
-    fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
-    fireEvent.click(screen.getByTestId('submit-button'))
+    simulateSubmit()
 
     expect(screen.getByTestId('submit-button')).not.toHaveTextContent('Rastrear')
   })
