@@ -64,4 +64,12 @@ describe('Home', () => {
 
     expect(listOrderByTrackingCode).toHaveBeenCalledTimes(1)
   })
+
+  it('Should not call listOrderByTrackingCode if form is invalid', async () => {
+    makeSut()
+
+    fireEvent.submit(screen.getByTestId('form'))
+
+    expect(listOrderByTrackingCode).not.toHaveBeenCalled()
+  })
 })
