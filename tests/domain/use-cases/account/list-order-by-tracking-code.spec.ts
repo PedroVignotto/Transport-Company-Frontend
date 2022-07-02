@@ -3,6 +3,7 @@ import { ListOrderByTrackingCode, listOrderByTrackingCodeUseCase } from '@/domai
 import { HttpClient } from '@/domain/contracts/http'
 
 import { mock } from 'jest-mock-extended'
+import { FieldNotFoundError } from '@/domain/errors'
 
 describe('listOrderByTrackingCodeUseCase', () => {
   let sut: ListOrderByTrackingCode
@@ -14,6 +15,8 @@ describe('listOrderByTrackingCodeUseCase', () => {
   beforeAll(() => {
     trackingCode = generateRandomTrackingCode()
     url = generateRandomHttpClient().url
+
+    httpClient.request.mockResolvedValue({ statusCode: 200 })
   })
 
   beforeEach(() => {
@@ -25,5 +28,13 @@ describe('listOrderByTrackingCodeUseCase', () => {
 
     expect(httpClient.request).toHaveBeenCalledWith({ url: `${url}/${trackingCode}`, method: 'get' })
     expect(httpClient.request).toHaveBeenCalledTimes(1)
+  })
+
+  it('Should throw FieldNotFoundError if HttpClient returns 400', async () => {
+    httpClient.request.mockResolvedValueOnce({ statusCode: 400 })
+
+    const promise = sut({ trackingCode })
+
+    await expect(promise).rejects.toThrow(new FieldNotFoundError('Código de rastreio'))
   })
 })
