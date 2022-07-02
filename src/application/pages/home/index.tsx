@@ -1,9 +1,8 @@
-import { Header, Input, Spinner } from '@/application/components'
+import { Footer, Header, Input, Spinner } from '@/application/components'
 import { transport } from '@/application/assets'
 
-import { Container, Content, Footer } from './styles'
+import { Container, Content } from './styles'
 
-import { FiInstagram, FiTwitter, FiYoutube } from 'react-icons/fi'
 import React from 'react'
 
 export const Home: React.FC = () => {
@@ -21,14 +20,7 @@ export const Home: React.FC = () => {
           <button type="submit">{ loading ? <Spinner /> : 'Rastrear' }</button>
         </form>
       </Content>
-      <Footer>
-        <span>© 2022 Transport Company</span>
-        <div>
-          <button><FiInstagram /></button>
-          <button><FiTwitter /></button>
-          <button><FiYoutube /></button>
-        </div>
-      </Footer>
+      <Footer />
     </Container>
   )
 }
