@@ -1,7 +1,9 @@
 import { generateRandomOrder } from '@/tests/mocks'
 import { Home } from '@/application/pages'
+import { UnexpectedError } from '@/domain/errors'
 
 import { fireEvent, render, screen } from '@testing-library/react'
+import { ToastContainer } from 'react-toastify'
 import React from 'react'
 
 describe('Home', () => {
@@ -13,7 +15,7 @@ describe('Home', () => {
     trackingCode = generateRandomOrder().trackingCode
   })
 
-  const makeSut = (): void => { render(<Home listOrderByTrackingCode={listOrderByTrackingCode} />) }
+  const makeSut = (): void => { render(<><ToastContainer/><Home listOrderByTrackingCode={listOrderByTrackingCode} /></>) }
 
   const populateField = (): void => {
     fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
@@ -71,5 +73,15 @@ describe('Home', () => {
     fireEvent.submit(screen.getByTestId('form'))
 
     expect(listOrderByTrackingCode).not.toHaveBeenCalled()
+  })
+
+  it('Should show alert error if listOrderByTrackingCode fails', async () => {
+    makeSut()
+    listOrderByTrackingCode.mockRejectedValueOnce(new UnexpectedError())
+
+    simulateSubmit()
+
+    expect(await screen.findByText(new UnexpectedError().message)).toBeInTheDocument()
+    expect(screen.getByTestId('submit-button')).toHaveTextContent('Rastrear')
   })
 })
