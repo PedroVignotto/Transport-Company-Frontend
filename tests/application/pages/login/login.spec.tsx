@@ -7,11 +7,13 @@ import React from 'react'
 describe('Home', () => {
   let trackingCode: string
 
-  const makeSut = (): void => { render(<Home />) }
+  const listOrderByTrackingCode: jest.Mock = jest.fn()
 
   beforeAll(() => {
     trackingCode = generateRandomOrder().trackingCode
   })
+
+  const makeSut = (): void => { render(<Home listOrderByTrackingCode={listOrderByTrackingCode} />) }
 
   const populateField = (): void => {
     fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
@@ -44,5 +46,13 @@ describe('Home', () => {
     simulateSubmit()
 
     expect(screen.getByTestId('submit-button')).not.toHaveTextContent('Rastrear')
+  })
+
+  it('Should call listOrderByTrackingCode with correct value', async () => {
+    makeSut()
+
+    simulateSubmit()
+
+    expect(listOrderByTrackingCode).toHaveBeenCalledWith({ trackingCode })
   })
 })
