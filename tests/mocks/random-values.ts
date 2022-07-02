@@ -8,8 +8,10 @@ export const generateRandomOrder = (): Order => ({
   trackingCode: faker.datatype.uuid(),
   deliveryStatus: [{ id: faker.datatype.uuid(), name: faker.name.findName() }]
 })
-export const generateRandomHttpClient = (): { url: string, method: HttpMethod, body: any } => ({
+export const generateRandomHttpClient = (): { url: string, method: HttpMethod, statusCode: number, body: any, data: any } => ({
   url: faker.internet.url(),
   method: faker.random.arrayElement(['get', 'post', 'put', 'delete']) as HttpMethod,
-  body: faker.random.objectElement()
+  statusCode: faker.random.arrayElement([200, 201, 204, 400, 401, 403, 500]),
+  body: faker.random.objectElement(),
+  data: faker.random.objectElement()
 })

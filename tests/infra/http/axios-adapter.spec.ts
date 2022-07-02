@@ -10,7 +10,9 @@ describe('AxiosAdapter', () => {
   let sut: AxiosAdapter
   let url: string
   let method: HttpMethod
+  let statusCode: number
   let body: any
+  let data: any
 
   const fakeAxios = axios as jest.Mocked<typeof axios>
 
@@ -18,6 +20,8 @@ describe('AxiosAdapter', () => {
     url = generateRandomHttpClient().url
     method = generateRandomHttpClient().method
     body = generateRandomHttpClient().body
+
+    fakeAxios.request.mockResolvedValue({ status: statusCode, data })
   })
 
   beforeEach(() => {
@@ -29,5 +33,12 @@ describe('AxiosAdapter', () => {
 
     expect(fakeAxios.request).toHaveBeenCalledWith({ url, method, data: body })
     expect(fakeAxios.request).toHaveBeenCalledTimes(1)
+  })
+
+  it('Should return correct response', async () => {
+    const httpResponse = await sut.request({ url, method, body })
+
+    expect(httpResponse.statusCode).toBe(statusCode)
+    expect(httpResponse.data).toEqual(data)
   })
 })
