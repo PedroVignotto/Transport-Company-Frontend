@@ -1,9 +1,9 @@
 import { generateRandomHttpClient, generateRandomTrackingCode } from '@/tests/mocks'
 import { ListOrderByTrackingCode, listOrderByTrackingCodeUseCase } from '@/domain/use-cases'
+import { FieldNotFoundError, UnexpectedError } from '@/domain/errors'
 import { HttpClient } from '@/domain/contracts/http'
 
 import { mock } from 'jest-mock-extended'
-import { FieldNotFoundError } from '@/domain/errors'
 
 describe('listOrderByTrackingCodeUseCase', () => {
   let sut: ListOrderByTrackingCode
@@ -36,5 +36,13 @@ describe('listOrderByTrackingCodeUseCase', () => {
     const promise = sut({ trackingCode })
 
     await expect(promise).rejects.toThrow(new FieldNotFoundError('Código de rastreio'))
+  })
+
+  it('Should throw UnexpectedError if HttpClient returns 500', async () => {
+    httpClient.request.mockResolvedValueOnce({ statusCode: 500 })
+
+    const promise = sut({ trackingCode })
+
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
