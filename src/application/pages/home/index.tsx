@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 
 export const Home: React.FC = () => {
   const [loading] = useState(false)
+  const [trackingCode, setTrackingCode] = useState('')
 
   return (
     <Container>
@@ -16,8 +17,14 @@ export const Home: React.FC = () => {
           <img src={transport} alt="Transport" />
         </aside>
         <form>
-          <Input name="trackingCode" placeholder="Insira o código de rastreio" data-testid="trackingCode" />
-          <button type="submit" data-testid="submit-button" disabled>{ loading ? <Spinner /> : 'Rastrear' }</button>
+          <Input
+            name="trackingCode"
+            data-testid="trackingCode"
+            placeholder="Insira o código de rastreio"
+            value={trackingCode}
+            setState={setTrackingCode}
+          />
+          <button type="submit" data-testid="submit-button" disabled={!trackingCode}>{ loading ? <Spinner /> : 'Rastrear' }</button>
         </form>
       </Content>
       <Footer />
