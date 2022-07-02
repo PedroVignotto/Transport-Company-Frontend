@@ -1,5 +1,6 @@
 import { Container } from './styles'
 
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 export const Header: React.FC = () => {
@@ -7,7 +8,7 @@ export const Header: React.FC = () => {
     <Container>
       <h1>Transport-Company</h1>
       <nav>
-        <a href="#">home</a>
+        <Link to="/">home</Link>
       </nav>
     </Container>
   )
