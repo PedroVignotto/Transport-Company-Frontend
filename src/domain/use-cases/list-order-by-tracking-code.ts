@@ -1,10 +1,16 @@
 import { HttpClient } from '@/domain/contracts/http'
+import { FieldNotFoundError } from '@/domain/errors'
 
 type Setup = (url: string, httpClient: HttpClient) => ListOrderByTrackingCode
 type Input = { trackingCode: string }
-type Output = void
+type Output = undefined | Error
 export type ListOrderByTrackingCode = (input: Input) => Promise<Output>
 
 export const listOrderByTrackingCodeUseCase: Setup = (url, httpClient) => async ({ trackingCode }) => {
-  await httpClient.request({ url: `${url}/${trackingCode}`, method: 'get' })
+  const { statusCode } = await httpClient.request({ url: `${url}/${trackingCode}`, method: 'get' })
+
+  switch (statusCode) {
+    case 400: throw new FieldNotFoundError('Código de rastreio')
+    default: return undefined
+  }
 }
