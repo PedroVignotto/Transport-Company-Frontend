@@ -1,7 +1,8 @@
-import { generateRandomHttpClient, generateRandomTrackingCode } from '@/tests/mocks'
+import { generateRandomHttpClient, generateRandomOrder } from '@/tests/mocks'
 import { ListOrderByTrackingCode, listOrderByTrackingCodeUseCase } from '@/domain/use-cases'
 import { FieldNotFoundError, UnexpectedError } from '@/domain/errors'
 import { HttpClient } from '@/domain/contracts/http'
+import { Order } from '@/domain/models'
 
 import { mock } from 'jest-mock-extended'
 
@@ -9,14 +10,16 @@ describe('listOrderByTrackingCodeUseCase', () => {
   let sut: ListOrderByTrackingCode
   let trackingCode: string
   let url: string
+  let order: Order
 
   const httpClient = mock<HttpClient>()
 
   beforeAll(() => {
-    trackingCode = generateRandomTrackingCode()
+    trackingCode = generateRandomOrder().trackingCode
     url = generateRandomHttpClient().url
+    order = generateRandomOrder()
 
-    httpClient.request.mockResolvedValue({ statusCode: 200 })
+    httpClient.request.mockResolvedValue({ statusCode: 200, data: order })
   })
 
   beforeEach(() => {
@@ -44,5 +47,11 @@ describe('listOrderByTrackingCodeUseCase', () => {
     const promise = sut({ trackingCode })
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
+
+  it('Should return a order data if HttpClient returns 200', async () => {
+    const result = await sut({ trackingCode })
+
+    expect(result).toEqual(order)
   })
 })
