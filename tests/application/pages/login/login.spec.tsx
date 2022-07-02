@@ -2,7 +2,8 @@ import { generateRandomOrder } from '@/tests/mocks'
 import { Home } from '@/application/pages'
 import { UnexpectedError } from '@/domain/errors'
 
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import React from 'react'
 
@@ -15,7 +16,14 @@ describe('Home', () => {
     trackingCode = generateRandomOrder().trackingCode
   })
 
-  const makeSut = (): void => { render(<><ToastContainer/><Home listOrderByTrackingCode={listOrderByTrackingCode} /></>) }
+  const makeSut = (): void => {
+    render(
+      <BrowserRouter>
+        <ToastContainer/>
+        <Home listOrderByTrackingCode={listOrderByTrackingCode} />
+      </BrowserRouter>
+    )
+  }
 
   const populateField = (): void => {
     fireEvent.input(screen.getByTestId('trackingCode'), { target: { value: trackingCode } })
@@ -46,6 +54,7 @@ describe('Home', () => {
     makeSut()
 
     simulateSubmit()
+    await waitFor(() => screen.getByTestId('form'))
 
     expect(screen.getByTestId('submit-button')).not.toHaveTextContent('Rastrear')
   })
@@ -54,6 +63,7 @@ describe('Home', () => {
     makeSut()
 
     simulateSubmit()
+    await waitFor(() => screen.getByTestId('form'))
 
     expect(listOrderByTrackingCode).toHaveBeenCalledWith({ trackingCode })
   })
@@ -63,6 +73,7 @@ describe('Home', () => {
 
     simulateSubmit()
     fireEvent.click(screen.getByTestId('submit-button'))
+    await waitFor(() => screen.getByTestId('form'))
 
     expect(listOrderByTrackingCode).toHaveBeenCalledTimes(1)
   })
@@ -83,5 +94,14 @@ describe('Home', () => {
 
     expect(await screen.findByText(new UnexpectedError().message)).toBeInTheDocument()
     expect(screen.getByTestId('submit-button')).toHaveTextContent('Rastrear')
+  })
+
+  it('Should go to tracking page on success', async () => {
+    makeSut()
+
+    simulateSubmit()
+    await waitFor(() => screen.getByTestId('form'))
+
+    expect(window.location.pathname).toBe('/tracking')
   })
 })
