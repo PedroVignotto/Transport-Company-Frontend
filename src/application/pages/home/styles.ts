@@ -19,6 +19,7 @@ export const Content = styled.main`
     flex-direction: column;
     flex-basis: 30%;
     width: 100%;
+    margin-left: 1rem;
 
     button {
       background-color: ${colors.blue};
