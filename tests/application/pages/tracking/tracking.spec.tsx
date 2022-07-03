@@ -31,4 +31,16 @@ describe('Tracking', () => {
 
     expect(window.location.pathname).toBe('/')
   })
+
+  it('Should show correct delivery steps', async () => {
+    const order = generateRandomOrder()
+    order.deliveryStatus[0].name = 'Coletado pela transportadora'
+
+    makeSut(order)
+
+    const orderSteps = screen.queryAllByTestId('order')
+    expect(orderSteps[0]).toHaveStyle({ opacity: 1 })
+    expect(orderSteps[1]).toHaveStyle({ opacity: 0.3 })
+    expect(orderSteps[2]).toHaveStyle({ opacity: 0.3 })
+  })
 })
