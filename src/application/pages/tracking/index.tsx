@@ -1,4 +1,5 @@
 import { Layout } from '@/application/layouts'
+import { Step } from '@/application/components'
 import { useOrder } from '@/application/hooks'
 import { delivery } from '@/application/assets'
 
@@ -25,18 +26,9 @@ export const Tracking: React.FC = () => {
         <section>
           <h2>{order?.trackingCode}</h2>
           <ul>
-            <li>
-              <FiBox />
-              <span>Coletado pela transportadora</span>
-            </li>
-            <li>
-              <FiTruck />
-              <span>Saiu para entrega</span>
-            </li>
-            <li>
-              <FiHome />
-              <span>Entregue</span>
-            </li>
+            <Step Icon={FiBox} deliveryStatus={'Coletado pela transportadora'} />
+            <Step Icon={FiTruck} deliveryStatus={'Saiu para entrega'} />
+            <Step Icon={FiHome} deliveryStatus={'Entregue'} />
           </ul>
         </section>
       </Content>

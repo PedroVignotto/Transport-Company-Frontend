@@ -4,7 +4,7 @@ export type Order = {
   deliveryStatus: DeliveryStatus[]
 }
 
-type DeliveryStatus = {
+export type DeliveryStatus = {
   id: string
   name: string
 }
