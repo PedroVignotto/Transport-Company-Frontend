@@ -4,13 +4,13 @@ import { GlobalStyle } from '@/application/styles'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import React from 'react'
-import { Tracking } from '@/application/pages'
 
 type Props = {
   Home: React.FC
+  Tracking: React.FC
 }
 
-export const Router: React.FC<Props> = ({ Home }) => {
+export const Router: React.FC<Props> = ({ Home, Tracking }) => {
   return (
     <OrderProvider>
       <ToastContainer autoClose={3000} theme="colored" />
