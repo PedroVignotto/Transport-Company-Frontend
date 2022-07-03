@@ -5,10 +5,16 @@ import { delivery } from '@/application/assets'
 import { Content } from './styles'
 
 import { FiBox, FiHome, FiTruck } from 'react-icons/fi'
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
 
 export const Tracking: React.FC = () => {
+  const navigate = useNavigate()
   const { order } = useOrder()
+
+  useEffect(() => {
+    if (!order) navigate('/')
+  }, [])
 
   return (
     <Layout>
