@@ -46,4 +46,10 @@ export const Container = styled.footer`
       }
     }
   }
+
+  @media (max-width: 315px) {
+    flex-direction: column-reverse;
+    height: 6rem;
+    padding: 1rem;
+  }
 `

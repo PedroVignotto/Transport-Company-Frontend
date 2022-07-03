@@ -44,4 +44,28 @@ export const Content = styled.main`
       }
     }
   }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+
+    aside {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    form {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    align-items: center;
+    justify-content: center;
+
+    aside {
+      display: none;
+    }
+  }
 `

@@ -30,4 +30,30 @@ export const Content = styled.main`
       margin-top: 3rem;
     }
   }
+
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    margin-top: 5rem;
+
+    aside {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    section {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+
+    aside {
+      display: none;
+    }
+  }
 `

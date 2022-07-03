@@ -32,4 +32,12 @@ export const Container = styled.header`
       }
     }
   }
+
+  @media (max-width: 400px) {
+    justify-content: flex-end;
+
+    h1 {
+      display: none;
+    }
+  }
 `
