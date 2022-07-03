@@ -8,13 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import React from 'react'
 
 describe('Tracking', () => {
-  let order: Order
-
-  beforeAll(() => {
-    order = generateRandomOrder()
-  })
-
-  const makeSut = (): void => {
+  const makeSut = (order: Order): void => {
     render(
       <OrderContext.Provider value={{ order, setOrder: jest.fn() }}>
         <BrowserRouter>
@@ -25,8 +19,16 @@ describe('Tracking', () => {
   }
 
   it('Should show correct trackingCode', async () => {
-    makeSut()
+    const order = generateRandomOrder()
+
+    makeSut(order)
 
     expect(await screen.findByText(order.trackingCode)).toBeInTheDocument()
+  })
+
+  it('Should redirect to home page if order is undefined', async () => {
+    makeSut(undefined as any)
+
+    expect(window.location.pathname).toBe('/')
   })
 })
